@@ -8,8 +8,14 @@
         :key="event.id"
       />
       <div class="pagination">
-        <router-link v-if="page!=1" :to="{name: 'EventList', query: {page: page - 1}}">Prev</router-link>
-        <router-link v-if="isNextPage" :to="{name: 'EventList', query: {page: page + 1}}">Next</router-link>
+        <router-link
+          v-if="page!=1"
+          :to="{name: 'EventList', query: {page: page - 1}}"
+        >Prev</router-link>
+        <router-link
+          v-if="isNextPage"
+          :to="{name: 'EventList', query: {page: page + 1}}"
+        >Next</router-link>
       </div>
     </div>
 
@@ -33,22 +39,22 @@ export default {
       totalEvents: 0,
     }
   },
-  computed:{
-    isNextPage(){
+  computed: {
+    isNextPage() {
       return this.page * 2 < this.totalEvents
-    }
+    },
   },
   created() {
-
-    watchEffect(()=>{
-    EventService.getEvents(2, this.page)
-      .then((res) => {
-        this.events = res.data;
-        this.totalEvents = res.headers['x-total-count'];
-      })
-      .catch((err) => console.log(err))
-    });
-
+    watchEffect(() => {
+      EventService.getEvents(2, this.page)
+        .then((res) => {
+          this.events = res.data
+          this.totalEvents = res.headers['x-total-count']
+        })
+        .catch(() => {
+          this.$router.push({ name: 'NetworkError' })
+        })
+    })
   },
 }
 </script>
@@ -59,7 +65,7 @@ export default {
   align-items: center;
   row-gap: 18px;
 }
-.pagination{
+.pagination {
   display: flex;
   justify-content: space-between;
   width: 250px;

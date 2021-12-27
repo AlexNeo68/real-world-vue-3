@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1> This page is not found!</h1>
+    <h1> This {{ resource }} is not found!</h1>
     <p></p>
     <p>Go <router-link :to="{name: 'EventList'}">Home</router-link>
     </p>
